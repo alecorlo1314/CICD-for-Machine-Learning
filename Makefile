@@ -1,5 +1,6 @@
 install:
     pip install --upgrade pip &&\
+        pip install black &&\
         pip install -r requerimientos.txt
 
 format:
