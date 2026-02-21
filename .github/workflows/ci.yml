@@ -1,0 +1,47 @@
+name: Integracion Continua
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+permissions: write-all
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. Checkout del código
+      - uses: actions/checkout@v3
+
+      # 2. Configurar Python
+      - name: Set Up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      # 3. Instalar dependencias (incluyendo black)
+      - name: Install dependencies
+        run: |
+          pip install black
+          pip install -r requirements.txt
+
+      # 4. Formateo de código
+      - name: Run format
+        run: make format
+
+      # 5. Instalar paquetes adicionales (según tu Makefile)
+      - name: Install Packages
+        run: make install
+
+      # 6. Entrenamiento del modelo
+      - name: Train
+        run: make train
+
+      # 7. Evaluación
+      - name: Evaluation
+        env:
+          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: make eval
