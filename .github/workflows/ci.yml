@@ -24,17 +24,15 @@ jobs:
 
       # 3. Instalar dependencias (incluyendo black)
       - name: Install dependencies
-        run: |
-          pip install black
-          pip install -r requerimientos.txt
+        run: pip install black
 
-      # 4. Formateo de código
-      - name: Run format
-        run: make format
-
-      # 5. Instalar paquetes adicionales (según tu Makefile)
+      # 4. Instalar paquetes adicionales (según tu Makefile)
       - name: Install Packages
         run: make install
+
+      # 5. Formateo de código
+      - name: Run format
+        run: make format
 
       # 6. Entrenamiento del modelo
       - name: Train
