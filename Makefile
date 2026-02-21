@@ -16,3 +16,9 @@ eval:
     echo '![Matriz de Confusion](./Resultados/matriz_confusion.png)'' >> reporte.md
 
     cml comment create reporte.md
+
+update-branch:
+    git config --global user.name $(USER_NAME)
+    git config --global user.email $(USER_EMAIL)
+    git commit -am "Actualizacion con nuevos resultados"
+    git push --force origin HEAD:update
