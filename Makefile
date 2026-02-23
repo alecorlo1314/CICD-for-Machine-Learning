@@ -96,12 +96,25 @@ update-branch:
 # 5. Inicia sesion con el token HF (variable de entorno secreta)
 #    y lo guarda en las credenciales de Git para operaciones
 #    posteriores sin re-autenticacion.
+#hf-login:
+#	git pull origin update
+#	git switch update
+#	pip install -U "huggingface_hub[cli]"
+#	python -m huggingface_hub.cli login --token $(HUGGING_FACE) --add-to-git-credential
+
+
 hf-login:
 	git pull origin update
 	git switch update
 	pip install -U "huggingface_hub[cli]"
-	python -m huggingface_hub.cli login --token $(HUGGING_FACE) --add-to-git-credential
+	python -c "from huggingface_hub import login; login(token='$(HUGGING_FACE)', add_to_git_credential=True)"
 
+push-hub:
+	python -c "from huggingface_hub import HfApi; api = HfApi(); api.upload_folder(folder_path='./Aplicacion', repo_id='alecorlo1234/Drug-Classification', repo_type='space', commit_message='Sync Archivos de la App')"
+	python -c "from huggingface_hub import HfApi; api = HfApi(); api.upload_folder(folder_path='./Modelo', path_in_repo='/Model', repo_id='alecorlo1234/Drug-Classification', repo_type='space', commit_message='Sync Modelo')"
+	python -c "from huggingface_hub import HfApi; api = HfApi(); api.upload_folder(folder_path='./Resultados', path_in_repo='/Metricas', repo_id='alecorlo1234/Drug-Classification', repo_type='space', commit_message='Sync Metricas')"
+
+deploy: hf-login push-hub
 # ------------------------------------------------------------
 # PUSH-HUB: Sube archivos al Space de Hugging Face
 # ------------------------------------------------------------
@@ -114,10 +127,10 @@ hf-login:
 #
 # Nota: $$HOME es necesario en Makefile para escapar el signo $
 # (un solo $ es interpretado como variable de Make).
-push-hub:
-	python -m huggingface_hub.cli upload alecorlo1234/Drug-Classification ./Aplicacion --repo-type=space --commit-message="Sync Archivos de la App"
-	python -m huggingface_hub.cli upload alecorlo1234/Drug-Classification ./Modelo /Model --repo-type=space --commit-message="Sync Modelo"
-	python -m huggingface_hub.cli upload alecorlo1234/Drug-Classification ./Resultados /Metricas --repo-type=space --commit-message="Sync Metricas"
+#push-hub:
+#	python -m huggingface_hub.cli upload alecorlo1234/Drug-Classification ./Aplicacion --repo-type=space --commit-message="Sync Archivos de la App"
+#	python -m huggingface_hub.cli upload alecorlo1234/Drug-Classification ./Modelo /Model --repo-type=space --commit-message="Sync Modelo"
+#	python -m huggingface_hub.cli upload alecorlo1234/Drug-Classification ./Resultados /Metricas --repo-type=space --commit-message="Sync Metricas"
 
 # ------------------------------------------------------------
 # DEPLOY: Despliega la aplicacion completa en Hugging Face
@@ -127,4 +140,4 @@ push-hub:
 #   2. push-hub  --> sube todos los archivos al Space
 #
 # Uso: make deploy HF="hf_tuTokenAqui"
-deploy: hf-login push-hub
+#deploy: hf-login push-hub
