@@ -1,7 +1,7 @@
 import gradio as gr
 import skops.io as sio
 
-pipiline = sio.load("../Modelo/pipeline.skops", trusted=['numpy.dtype'])
+pipiline = sio.load("Modelo/pipeline.skops", trusted=['numpy.dtype'])
 
 def prediccion(age, sex, blood_pressure, cholesterol, na_to_k_ratio):
     """Predice el medicamento basado en las características del paciente
