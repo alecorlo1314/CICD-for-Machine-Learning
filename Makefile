@@ -78,9 +78,9 @@ hf-login:
 # PUSH-HUB: Sube archivos al Space de Hugging Face
 # ------------------------------------------------------------
 push-hub:
-	hf upload alecorlo1234/Drug-Classification ./Aplicacion --repo-type space --commit-message "Sync Archivos de la App"
-	hf upload alecorlo1234/Drug-Classification ./Modelo /Modelo --repo-type=space --commit-message="Sync Modelo"
-	hf upload alecorlo1234/Drug-Classification ./Resultados /Metricas --repo-type=space --commit-message="Sync Metricas"
+	hf upload alecorlo1234/Clasificacion-Medicinas ./Aplicacion --repo-type space --commit-message "Sync Archivos de la App"
+	hf upload alecorlo1234/Clasificacion-Medicinas ./Modelo /Modelo --repo-type=space --commit-message="Sync Modelo"
+	hf upload alecorlo1234/Clasificacion-Medicinas ./Resultados /Metricas --repo-type=space --commit-message="Sync Metricas"
 
 # ------------------------------------------------------------
 # DEPLOY: Despliega la aplicacion completa en Hugging Face
