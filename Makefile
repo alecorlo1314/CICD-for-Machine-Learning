@@ -16,7 +16,7 @@
 # si el primero finalizo exitosamente (codigo de salida 0).
 install:
 	pip install --upgrade pip &&\
-	pip install -r requerimientos.txt
+	pip install -r requirements.txt
 
 # ------------------------------------------------------------
 # FORMAT: Formatea el codigo fuente automaticamente
