@@ -96,9 +96,9 @@ hf-login:
 	hf auth whoami
 
 push-hub:
-	huggingface-cli upload alecorlo1314/Drug-Classification ./Aplicacion --repo-type=space --commit-message="Sync Archivos de la App"
-	huggingface-cli upload alecorlo1314/Drug-Classification ./Modelo /Model --repo-type=space --commit-message="Sync Modelo"
-	huggingface-cli upload alecorlo1234/Drug-Classification ./Resultados /Metricas --repo-type=space --commit-message="Sync Metricas"
+	hf upload alecorlo1314/Drug-Classification ./Aplicacion --repo-type space --commit-message "Sync Archivos de la App"
+	hf upload alecorlo1314/Drug-Classification ./Modelo /Model --repo-type=space --commit-message="Sync Modelo"
+	hf upload alecorlo1234/Drug-Classification ./Resultados /Metricas --repo-type=space --commit-message="Sync Metricas"
 
 deploy: hf-login push-hub
 # ------------------------------------------------------------
