@@ -91,13 +91,19 @@ update-branch:
 hf-login:
 	git pull origin update
 	git switch update
-	pip install -U "huggingface_hub[cli]"
-	huggingface-cli login --token $(HF) --add-to-git-credential
+	pip install -U "huggingface_hub"
+	python -m huggingface_hub.commands.huggingface_cli login --token $(HF) --add-to-git-credential
 
 push-hub:
-	huggingface-cli upload alecorlo1234/Drug-Classification ./Aplicacion --repo-type=space --commit-message="Sync Archivos de la App"
-	huggingface-cli upload alecorlo1234/Drug-Classification ./Modelo /Modelo --repo-type=space --commit-message="Sync Modelo"
-	huggingface-cli upload alecorlo1234/Drug-Classification ./Resultados /Metricas --repo-type=space --commit-message="Sync Metricas"
+	python -m huggingface_hub.commands.huggingface_cli upload \
+		alecorlo1314/Drug-Classification ./Aplicacion \
+		--repo-type=space --commit-message="Sync Archivos de la App"
+	python -m huggingface_hub.commands.huggingface_cli upload \
+		alecorlo1314/Drug-Classification ./Modelo /Modelo \
+		--repo-type=space --commit-message="Sync Modelo"
+	python -m huggingface_hub.commands.huggingface_cli upload \
+		alecorlo1314/Drug-Classification ./Resultados /Metricas \
+		--repo-type=space --commit-message="Sync Metricas"
 
 deploy: hf-login push-hub
 # ------------------------------------------------------------
