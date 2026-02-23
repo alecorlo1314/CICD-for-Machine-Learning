@@ -96,12 +96,8 @@ hf-login:
 
 push-hub:
 	huggingface-cli upload alecorlo1314/Drug-Classification ./Aplicacion --repo-type=space --commit-message="Sync Archivos de la App"
-	python -m huggingface_hub.commands.huggingface_cli upload \
-		alecorlo1314/Drug-Classification ./Aplicacion \
-		--repo-type=space --commit-message="Sync Archivos de la App"
-	python -m huggingface_hub.commands.huggingface_cli upload \
-		alecorlo1314/Drug-Classification ./Modelo /Modelo \
-		--repo-type=space --commit-message="Sync Modelo"
+    huggingface-cli upload alecorlo1314/Drug-Classification ./Modelo /Model --repo-type=space --commit-message="Sync Modelo"
+	
 	python -m huggingface_hub.commands.huggingface_cli upload \
 		alecorlo1314/Drug-Classification ./Resultados /Metricas \
 		--repo-type=space --commit-message="Sync Metricas"
