@@ -96,18 +96,11 @@ update-branch:
 # 5. Inicia sesion con el token HF (variable de entorno secreta)
 #    y lo guarda en las credenciales de Git para operaciones
 #    posteriores sin re-autenticacion.
-#
-# Uso: make hf-login HF="hf_tuTokenAqui"
-#hf-login:
-#	git pull origin update
-#	git switch update
-#	pip install -U "huggingface_hub[cli]"
-#	huggingface-cli login --token $(HUGGING_FACE) --add-to-git-credential
 hf-login:
-	git pull origin update
-	git switch update
-	pip install -U "huggingface_hub[cli]"
-	export PATH="$$PATH:$$HOME/.local/bin" && huggingface-cli login --token $(HUGGING_FACE) --add-to-git-credential
+    git pull origin update
+    git switch update
+    pip install -U "huggingface_hub[cli]"
+    export PATH="$$PATH:$$HOME/.local/bin" && huggingface-cli login --token ${HUGGING_FACE} --add-to-git-credential
 
 # ------------------------------------------------------------
 # PUSH-HUB: Sube archivos al Space de Hugging Face
@@ -121,15 +114,13 @@ hf-login:
 #
 # Nota: $$HOME es necesario en Makefile para escapar el signo $
 # (un solo $ es interpretado como variable de Make).
-#push-hub:
-#	huggingface upload alecorlo1234/Drug-Classification ./Aplicacion --repo-type=space --commit-message="Sync Archivos App"
-#	huggingface upload alecorlo1234/Drug-Classification ./Modelo /Modelo --repo-type=space --commit-message="Sync Modelo"
-#	huggingface upload alecorlo1234/Drug-Classification ./Metricas /Metricas --repo-type=space --commit-message="Sync Metricas"
-
 push-hub:
-	export PATH="$$PATH:$$HOME/.local/bin" && huggingface-cli upload alecorlo1234/Drug-Classification ./Aplicacion --repo-type=space --commit-message="Sync Archivos App"
-	export PATH="$$PATH:$$HOME/.local/bin" && huggingface-cli upload alecorlo1234/Drug-Classification ./Modelo /Modelo --repo-type=space --commit-message="Sync Modelo"
-	export PATH="$$PATH:$$HOME/.local/bin" && huggingface-cli upload alecorlo1234/Drug-Classification ./Resultados /Metricas --repo-type=space --commit-message="Sync Metricas"
+    export PATH="$$PATH:$$HOME/.local/bin" && \
+    huggingface-cli upload kingabzpro/Drug-Classification ./App --repo-type=space --commit-message="Sync App files" && \
+    huggingface-cli upload kingabzpro/Drug-Classification ./Model /Model --repo-type=space --commit-message="Sync Model" && \
+    huggingface-cli upload kingabzpro/Drug-Classification ./Results /Metrics --repo-type=space --commit-message="Sync Metrics"
+
+deploy: hf-login push-hub
 
 # ------------------------------------------------------------
 # DEPLOY: Despliega la aplicacion completa en Hugging Face
