@@ -10,10 +10,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-
-      - name: Install Hugging Face CLI
-        run: pip install "huggingface_hub[cli]==0.21.0"
+      - uses: actions/checkout@v3"
 
       - name: Deployment To Hugging Face
         env:
