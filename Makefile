@@ -95,6 +95,7 @@ hf-login:
 	python -m huggingface_hub.commands.huggingface_cli login --token $(HF) --add-to-git-credential
 
 push-hub:
+	huggingface-cli upload alecorlo1314/Drug-Classification ./Aplicacion --repo-type=space --commit-message="Sync Archivos de la App"
 	python -m huggingface_hub.commands.huggingface_cli upload \
 		alecorlo1314/Drug-Classification ./Aplicacion \
 		--repo-type=space --commit-message="Sync Archivos de la App"
