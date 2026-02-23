@@ -104,15 +104,15 @@ update-branch:
 
 
 hf-login:
-	git pull origin update
-	git switch update
-	pip install -U "huggingface_hub[cli]"
-	python -c "from huggingface_hub import login; login(token='$(HUGGING_FACE)', add_to_git_credential=True)"
+    git pull origin update
+    git switch update
+    pip install -U "huggingface_hub[cli]"
+    python -c "from huggingface_hub import login; login(token='$(HUGGING_FACE)', add_to_git_credential=True)"
 
 push-hub:
-	python -c "from huggingface_hub import HfApi; api = HfApi(); api.upload_folder(folder_path='./Aplicacion', repo_id='alecorlo1234/Drug-Classification', repo_type='space', commit_message='Sync Archivos de la App')"
-	python -c "from huggingface_hub import HfApi; api = HfApi(); api.upload_folder(folder_path='./Modelo', path_in_repo='/Model', repo_id='alecorlo1234/Drug-Classification', repo_type='space', commit_message='Sync Modelo')"
-	python -c "from huggingface_hub import HfApi; api = HfApi(); api.upload_folder(folder_path='./Resultados', path_in_repo='/Metricas', repo_id='alecorlo1234/Drug-Classification', repo_type='space', commit_message='Sync Metricas')"
+    python -c "from huggingface_hub import HfApi; api = HfApi(); api.upload_folder(folder_path='./Aplicacion', repo_id='alecorlo1234/Drug-Classification', repo_type='space', commit_message='Sync Archivos de la App')"
+    python -c "from huggingface_hub import HfApi; api = HfApi(); api.upload_folder(folder_path='./Modelo', path_in_repo='/Model', repo_id='alecorlo1234/Drug-Classification', repo_type='space', commit_message='Sync Modelo')"
+    python -c "from huggingface_hub import HfApi; api = HfApi(); api.upload_folder(folder_path='./Resultados', path_in_repo='/Metricas', repo_id='alecorlo1234/Drug-Classification', repo_type='space', commit_message='Sync Metricas')"
 
 deploy: hf-login push-hub
 # ------------------------------------------------------------
