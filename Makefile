@@ -89,7 +89,7 @@ update-branch:
 # ------------------------------------------------------------
 
 hf-login:
-	git pull origin update
+	git pull --rebase origin main
 	git switch update
 	pip install -U "huggingface_hub[cli]"
 	hf auth login --token $(HF) --add-to-git-credential
@@ -97,7 +97,7 @@ hf-login:
 
 push-hub:
 	hf upload alecorlo1234/Drug-Classification ./Aplicacion --repo-type space --commit-message "Sync Archivos de la App"
-	
+
 	hf upload alecorlo1234/Drug-Classification ./Modelo /Model --repo-type=space --commit-message="Sync Modelo"
 	hf upload alecorlo1234/Drug-Classification ./Resultados /Metricas --repo-type=space --commit-message="Sync Metricas"
 
