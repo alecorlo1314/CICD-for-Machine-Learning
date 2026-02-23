@@ -107,7 +107,7 @@ hf-login:
 	git pull origin update
 	git switch update
 	pip install -U "huggingface_hub[cli]"
-	python -m huggingface_hub.commands.huggingface_cli login --token $(HUGGING_FACE) --add-to-git-credential
+	export PATH="$$PATH:$$HOME/.local/bin" && huggingface-cli login --token $(HUGGING_FACE) --add-to-git-credential
 
 # ------------------------------------------------------------
 # PUSH-HUB: Sube archivos al Space de Hugging Face
@@ -127,11 +127,9 @@ hf-login:
 #	huggingface upload alecorlo1234/Drug-Classification ./Metricas /Metricas --repo-type=space --commit-message="Sync Metricas"
 
 push-hub:
-	python -m huggingface_hub.commands.huggingface_cli upload alecorlo1234/Drug-Classification ./Aplicacion --repo-type=space --commit-message="Sync Archivos App"
-
-	python -m huggingface_hub.commands.huggingface_cli upload alecorlo1234/Drug-Classification ./Modelo /Modelo --repo-type=space --commit-message="Sync Modelo"
-
-	python -m huggingface_hub.commands.huggingface_cli upload alecorlo1234/Drug-Classification ./Resultados /Metricas --repo-type=space --commit-message="Sync Metricas"
+	export PATH="$$PATH:$$HOME/.local/bin" && huggingface-cli upload alecorlo1234/Drug-Classification ./Aplicacion --repo-type=space --commit-message="Sync Archivos App"
+	export PATH="$$PATH:$$HOME/.local/bin" && huggingface-cli upload alecorlo1234/Drug-Classification ./Modelo /Modelo --repo-type=space --commit-message="Sync Modelo"
+	export PATH="$$PATH:$$HOME/.local/bin" && huggingface-cli upload alecorlo1234/Drug-Classification ./Resultados /Metricas --repo-type=space --commit-message="Sync Metricas"
 
 # ------------------------------------------------------------
 # DEPLOY: Despliega la aplicacion completa en Hugging Face
