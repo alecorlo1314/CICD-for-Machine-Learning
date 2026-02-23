@@ -100,13 +100,13 @@ hf-login:
 	git pull origin update
 	git switch update
 	pip install -U "huggingface_hub[cli]"
-	export PATH="$$PATH:$$HOME/.local/bin" && huggingface-cli login --token ${HUGGING_FACE} --add-to-git-credential
+	python -m huggingface_hub.cli login --token $(HUGGING_FACE) --add-to-git-credential
 
 # ------------------------------------------------------------
 # PUSH-HUB: Sube archivos al Space de Hugging Face
 # ------------------------------------------------------------
 # Sincroniza tres carpetas del repositorio con el Space
-# 'kingabzpro/Drug-Classification' en Hugging Face:
+# 'alecorlo1234/Drug-Classification' en Hugging Face:
 #
 #   ./Aplicacion  --> raiz del Space    (archivos de la app)
 #   ./Modelo      --> carpeta /Modelo   (modelo entrenado)
@@ -115,10 +115,9 @@ hf-login:
 # Nota: $$HOME es necesario en Makefile para escapar el signo $
 # (un solo $ es interpretado como variable de Make).
 push-hub:
-	export PATH="$$PATH:$$HOME/.local/bin" && \
-	huggingface-cli upload kingabzpro/Drug-Classification ./App --repo-type=space --commit-message="Sync App files" && \
-	huggingface-cli upload kingabzpro/Drug-Classification ./Model /Model --repo-type=space --commit-message="Sync Model" && \
-	huggingface-cli upload kingabzpro/Drug-Classification ./Results /Metrics --repo-type=space --commit-message="Sync Metrics"
+	python -m huggingface_hub.cli upload alecorlo1234/Drug-Classification ./Aplicacion --repo-type=space --commit-message="Sync Archivos de la App"
+	python -m huggingface_hub.cli upload alecorlo1234/Drug-Classification ./Modelo /Model --repo-type=space --commit-message="Sync Modelo"
+	python -m huggingface_hub.cli upload alecorlo1234/Drug-Classification ./Resultados /Metricas --repo-type=space --commit-message="Sync Metricas"
 
 # ------------------------------------------------------------
 # DEPLOY: Despliega la aplicacion completa en Hugging Face
