@@ -97,10 +97,10 @@ update-branch:
 #    y lo guarda en las credenciales de Git para operaciones
 #    posteriores sin re-autenticacion.
 hf-login:
-    git pull origin update
-    git switch update
-    pip install -U "huggingface_hub[cli]"
-    export PATH="$$PATH:$$HOME/.local/bin" && huggingface-cli login --token ${HUGGING_FACE} --add-to-git-credential
+	git pull origin update
+	git switch update
+	pip install -U "huggingface_hub[cli]"
+	export PATH="$$PATH:$$HOME/.local/bin" && huggingface-cli login --token ${HUGGING_FACE} --add-to-git-credential
 
 # ------------------------------------------------------------
 # PUSH-HUB: Sube archivos al Space de Hugging Face
@@ -115,12 +115,10 @@ hf-login:
 # Nota: $$HOME es necesario en Makefile para escapar el signo $
 # (un solo $ es interpretado como variable de Make).
 push-hub:
-    export PATH="$$PATH:$$HOME/.local/bin" && \
-    huggingface-cli upload kingabzpro/Drug-Classification ./App --repo-type=space --commit-message="Sync App files" && \
-    huggingface-cli upload kingabzpro/Drug-Classification ./Model /Model --repo-type=space --commit-message="Sync Model" && \
-    huggingface-cli upload kingabzpro/Drug-Classification ./Results /Metrics --repo-type=space --commit-message="Sync Metrics"
-
-deploy: hf-login push-hub
+	export PATH="$$PATH:$$HOME/.local/bin" && \
+	huggingface-cli upload kingabzpro/Drug-Classification ./App --repo-type=space --commit-message="Sync App files" && \
+	huggingface-cli upload kingabzpro/Drug-Classification ./Model /Model --repo-type=space --commit-message="Sync Model" && \
+	huggingface-cli upload kingabzpro/Drug-Classification ./Results /Metrics --repo-type=space --commit-message="Sync Metrics"
 
 # ------------------------------------------------------------
 # DEPLOY: Despliega la aplicacion completa en Hugging Face
