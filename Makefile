@@ -92,7 +92,8 @@ hf-login:
 	git pull origin update
 	git switch update
 	pip install -U "huggingface_hub[cli]"
-	huggingface-cli login --token $(HF) --add-to-git-credential
+	hf auth login --token $(HF) --add-to-git-credential
+	hf auth whoami
 
 push-hub:
 	huggingface-cli upload alecorlo1314/Drug-Classification ./Aplicacion --repo-type=space --commit-message="Sync Archivos de la App"
