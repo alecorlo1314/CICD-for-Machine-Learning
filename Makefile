@@ -68,12 +68,11 @@ update-branch:
 # HF-LOGIN: Autentica en Hugging Face Hub
 # ------------------------------------------------------------
 hf-login:
-	git pull origin update
-	git switch update
+	git fetch origin
+	git switch -c update --track origin/update || git switch update
 	pip install -U "huggingface_hub[cli]"
 	hf auth login --token $(HF) --add-to-git-credential
 	hf auth whoami
-
 # ------------------------------------------------------------
 # PUSH-HUB: Sube archivos al Space de Hugging Face
 # ------------------------------------------------------------
