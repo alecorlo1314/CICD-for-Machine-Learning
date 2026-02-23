@@ -18,7 +18,6 @@ install:
 	pip install --upgrade pip &&\
 	pip install -r requerimientos.txt
 
-
 # ------------------------------------------------------------
 # FORMAT: Formatea el codigo fuente automaticamente
 # ------------------------------------------------------------
@@ -29,7 +28,6 @@ install:
 format:
 	black *.py
 
-
 # ------------------------------------------------------------
 # TRAIN: Entrena el modelo de Machine Learning
 # ------------------------------------------------------------
@@ -39,35 +37,17 @@ format:
 train:
 	python train.py
 
-
 # ------------------------------------------------------------
 # EVAL: Evalua el modelo y genera un reporte automatico
 # ------------------------------------------------------------
 # Construye un archivo reporte.md con las metricas y graficos
 # del modelo, luego lo publica en GitHub via CML.
 eval:
-	# --- Construccion del reporte Markdown ---
-
-	# Crea reporte.md con el encabezado principal (> sobreescribe)
 	echo "## Metricas del Modelo" > reporte.md
-
-	# Agrega las metricas guardadas en metricas.txt (>> agrega sin sobreescribir)
-	# Ejemplo de contenido: Accuracy, F1-Score, Precision, Recall
 	cat ./Resultados/metricas.txt >> reporte.md
-
-	# Agrega el titulo de la seccion de la matriz de confusion
 	echo '\n## Matriz de Confusion' >> reporte.md
-
-	# Inserta la imagen de la matriz como figura Markdown
 	echo '![Matriz de Confusion](./Resultados/matriz_confusion.png)' >> reporte.md
-
-	# --- Publicacion del reporte en GitHub via CML ---
-	# CML (Continuous Machine Learning) toma el reporte.md
-	# y lo publica como comentario automatico en el Pull Request
-	# o commit activo. Resultado: metricas visibles directamente
-	# en la interfaz de GitHub sin abrir archivos manualmente.
 	cml comment create reporte.md
-
 
 # ------------------------------------------------------------
 # UPDATE-BRANCH: Sube los resultados a la rama 'update'
@@ -87,24 +67,19 @@ update-branch:
 # ------------------------------------------------------------
 # HF-LOGIN: Autentica en Hugging Face Hub
 # ------------------------------------------------------------
-
 hf-login:
-	git pull origin update
-	git switch update
+	git fetch origin
+	git switch -c update --track origin/update || git switch update
 	pip install -U "huggingface_hub[cli]"
 	hf auth login --token $(HF) --add-to-git-credential
 	hf auth whoami
-
-push-hub:
-	hf upload alecorlo1234/Drug-Classification ./Aplicacion --repo-type space --commit-message "Sync Archivos de la App"
-	
-	hf upload alecorlo1234/Drug-Classification ./Modelo /Model --repo-type=space --commit-message="Sync Modelo"
-	hf upload alecorlo1234/Drug-Classification ./Resultados /Metricas --repo-type=space --commit-message="Sync Metricas"
-
-deploy: hf-login push-hub
 # ------------------------------------------------------------
 # PUSH-HUB: Sube archivos al Space de Hugging Face
 # ------------------------------------------------------------
+push-hub:
+	hf upload alecorlo1234/Drug-Classification ./Aplicacion --repo-type space --commit-message "Sync Archivos de la App"
+	hf upload alecorlo1234/Drug-Classification ./Modelo /Model --repo-type=space --commit-message="Sync Modelo"
+	hf upload alecorlo1234/Drug-Classification ./Resultados /Metricas --repo-type=space --commit-message="Sync Metricas"
 
 # ------------------------------------------------------------
 # DEPLOY: Despliega la aplicacion completa en Hugging Face
@@ -114,4 +89,4 @@ deploy: hf-login push-hub
 #   2. push-hub  --> sube todos los archivos al Space
 #
 # Uso: make deploy HF="hf_tuTokenAqui"
-#deploy: hf-login push-hub
+deploy: hf-login push-hub
