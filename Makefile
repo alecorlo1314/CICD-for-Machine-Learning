@@ -98,12 +98,16 @@ update-branch:
 #    posteriores sin re-autenticacion.
 #
 # Uso: make hf-login HF="hf_tuTokenAqui"
+#hf-login:
+#	git pull origin update
+#	git switch update
+#	pip install -U "huggingface_hub[cli]"
+#	huggingface-cli login --token $(HUGGING_FACE) --add-to-git-credential
 hf-login:
 	git pull origin update
 	git switch update
 	pip install -U "huggingface_hub[cli]"
-	huggingface-cli login --token $(HUGGING_FACE) --add-to-git-credential
-
+	python -m huggingface_hub.commands.huggingface_cli login --token $(HUGGING_FACE) --add-to-git-credential
 
 # ------------------------------------------------------------
 # PUSH-HUB: Sube archivos al Space de Hugging Face
@@ -117,10 +121,17 @@ hf-login:
 #
 # Nota: $$HOME es necesario en Makefile para escapar el signo $
 # (un solo $ es interpretado como variable de Make).
+#push-hub:
+#	huggingface upload alecorlo1234/Drug-Classification ./Aplicacion --repo-type=space --commit-message="Sync Archivos App"
+#	huggingface upload alecorlo1234/Drug-Classification ./Modelo /Modelo --repo-type=space --commit-message="Sync Modelo"
+#	huggingface upload alecorlo1234/Drug-Classification ./Metricas /Metricas --repo-type=space --commit-message="Sync Metricas"
+
 push-hub:
-	huggingface upload alecorlo1234/Drug-Classification ./Aplicacion --repo-type=space --commit-message="Sync Archivos App"
-	huggingface upload alecorlo1234/Drug-Classification ./Modelo /Modelo --repo-type=space --commit-message="Sync Modelo"
-	huggingface upload alecorlo1234/Drug-Classification ./Metricas /Metricas --repo-type=space --commit-message="Sync Metricas"
+	python -m huggingface_hub.commands.huggingface_cli upload alecorlo1234/Drug-Classification ./Aplicacion --repo-type=space --commit-message="Sync Archivos App"
+
+	python -m huggingface_hub.commands.huggingface_cli upload alecorlo1234/Drug-Classification ./Modelo /Modelo --repo-type=space --commit-message="Sync Modelo"
+
+	python -m huggingface_hub.commands.huggingface_cli upload alecorlo1234/Drug-Classification ./Resultados /Metricas --repo-type=space --commit-message="Sync Metricas"
 
 # ------------------------------------------------------------
 # DEPLOY: Despliega la aplicacion completa en Hugging Face
