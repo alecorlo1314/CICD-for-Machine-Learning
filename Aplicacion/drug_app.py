@@ -1,7 +1,7 @@
 import gradio as gr
-from Aplicacion.predecir import load_model, predict
+import skops.io as sio
 
-pipeline = load_model()
+pipeline = sio.load("Modelo/pipeline.skops", trusted=["numpy.dtype"])
 
 
 def prediccion(age, sex, blood_pressure, cholesterol, na_to_k_ratio):
@@ -19,7 +19,7 @@ def prediccion(age, sex, blood_pressure, cholesterol, na_to_k_ratio):
     """
 
     caracteristicas = [age, sex, blood_pressure, cholesterol, na_to_k_ratio]
-    medicamento_predicho = predict(pipeline, caracteristicas)
+    medicamento_predicho = pipeline.predict([caracteristicas])[0]
 
     label = f"El medicamento recomendado para el paciente es: {medicamento_predicho}"
     return label
