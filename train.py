@@ -4,6 +4,7 @@ from src.entrenar import build_pipeline
 from src.evaluar import evaluate_model
 from sklearn.model_selection import train_test_split
 
+
 def main():
     medicamentos_df = load_data("Datos/drug200.csv")
     medicamentos_df = medicamentos_df.sample(frac=1)
