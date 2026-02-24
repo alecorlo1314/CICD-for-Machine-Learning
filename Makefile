@@ -37,12 +37,8 @@ format-check:
 train:
 	python -m train
 
-
 lint:
 	flake8 --ignore E203 --max-line-length 100 src Aplicacion
-
-test:
-	pytest
 
 # ------------------------------------------------------------
 # EVAL: Evalua el modelo y genera un reporte automatico
