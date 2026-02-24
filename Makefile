@@ -26,7 +26,7 @@ install:
 # Beneficio: elimina discusiones de estilo y mantiene el codigo
 # limpio sin esfuerzo manual.
 format:
-	black *.py
+	black .
 
 # ------------------------------------------------------------
 # TRAIN: Entrena el modelo de Machine Learning
