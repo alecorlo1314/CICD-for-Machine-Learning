@@ -1,29 +1,61 @@
 name: Continuous Integration
+
 on:
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
   workflow_dispatch:
-  
-permissions: write-all
+
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
-      - uses: iterative/setup-cml@v2
-      - name: Install Packages
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Setup CML
+        uses: iterative/setup-cml@v2
+
+      - name: Install dependencies
         run: make install
-      - name: Format
-        run: make format
-      - name: Train
+
+      - name: Check formatting
+        run: make format-check
+
+      - name: Lint code
+        run: make lint
+
+      - name: Run tests
+        run: make test
+
+      - name: Train model
         run: make train
+
       - name: Evaluation
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: make eval
-      - name: Update Branch
+
+      - name: Update branch
         env:
           NAME: ${{ secrets.USER_NAME }}
           EMAIL: ${{ secrets.USER_EMAIL }}
