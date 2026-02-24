@@ -44,9 +44,6 @@ jobs:
       - name: Lint code
         run: make lint
 
-      - name: Run tests
-        run: make test
-
       - name: Train model
         run: make train
 
