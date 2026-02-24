@@ -29,16 +29,13 @@ X_train, X_test, y_train, y_test = train_test_split(
 
 #Contruir el pipeline
 pipe = build_pipeline()
-pipe.fit(X_train, y_train)
 
-## Training
+#Entrenamiento del modelo
 pipe.fit(X_train, y_train)
-
 
 ## Model Evaluation
-predictions = pipe.predict(X_test)
-accuracy = accuracy_score(y_test, predictions)
-f1 = f1_score(y_test, predictions, average="macro")
+from src.evaluate import evaluate_model
+accuracy, f1, predictions = evaluate_model(pipe, X_test, y_test)
 
 print("Accuracy:", str(round(accuracy, 2) * 100) + "%", "F1:", round(f1, 2))
 
