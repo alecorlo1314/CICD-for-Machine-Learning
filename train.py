@@ -6,10 +6,13 @@ from sklearn.impute import SimpleImputer
 from sklearn.metrics import accuracy_score, f1_score
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OrdinalEncoder, StandardScaler
-
+#Cargar datos desde src/data.py
 from src.data import load_data
-medicamentos_df = load_data("Datos/drug200.csv")
+from src.train import train_model
 
+from src.train import build_pipeline
+
+medicamentos_df = load_data("Datos/drug200.csv")
 ## Loading the Data
 #medicamentos_df = pd.read_csv("Datos/drug200.csv")
 medicamentos_df = medicamentos_df.sample(frac=1)
@@ -24,24 +27,9 @@ X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.3, random_state=125
 )
 
-
-## Pipeline
-cat_col = [1, 2, 3]
-num_col = [0, 4]
-
-transform = ColumnTransformer(
-    [
-        ("encoder", OrdinalEncoder(), cat_col),
-        ("num_imputer", SimpleImputer(strategy="median"), num_col),
-        ("num_scaler", StandardScaler(), num_col),
-    ]
-)
-pipe = Pipeline(
-    steps=[
-        ("preprocessing", transform),
-        ("model", RandomForestClassifier(n_estimators=100, random_state=125)),
-    ]
-)
+#Contruir el pipeline
+pipe = build_pipeline()
+pipe.fit(X_train, y_train)
 
 ## Training
 pipe.fit(X_train, y_train)
