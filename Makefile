@@ -52,11 +52,8 @@ eval:
 update-branch:
 	git config --global user.name $(USER_NAME)
 	git config --global user.email $(USER_EMAIL)
-	git add .
-	git diff --cached --quiet || git commit -m "Actualizacion con nuevos resultados"
-	git pull --rebase origin update
-	git push origin HEAD:update
-
+	git commit -am "Update with new results"
+	git push --force origin HEAD:update
 
 # ------------------------------------------------------------
 # HF-LOGIN: Autentica en Hugging Face Hub
