@@ -1,5 +1,4 @@
 import gradio as gr
-import skops.io as sio
 from src.predecir import load_model, predict
 import os
 

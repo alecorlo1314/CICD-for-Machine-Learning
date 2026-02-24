@@ -39,7 +39,7 @@ train:
 
 
 lint:
-	flake8 src Aplicacion
+	flake8 --ignore E203 --max-line-length 100 src Aplicacion
 
 test:
 	pytest
