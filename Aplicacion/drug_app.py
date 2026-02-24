@@ -46,8 +46,16 @@ ejemplos = [
 ]
 
 titulo = "Predicción de Medicamento para Pacientes"
-descripcion = "Ingrese las características del paciente para obtener una recomendación de medicamento."
-articulo = "Este modelo utiliza un clasificador Random Forest para predecir el medicamento más adecuado para un paciente basado en su edad, sexo, presión sanguínea, nivel de colesterol y relación sodio/potasio."
+descripcion = (
+    "Ingrese las características del paciente para obtener "
+    "una recomendación de medicamento."
+)
+articulo = (
+    "Este modelo utiliza un clasificador Random Forest para predecir "
+    "el medicamento más adecuado para un paciente basado en su edad, "
+    "sexo, presión sanguínea, nivel de colesterol y relación sodio/potasio."
+)
+
 
 gr.Interface(
     fn=prediccion,
