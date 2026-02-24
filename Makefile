@@ -37,7 +37,6 @@ hf-login:
 
 push-hub:
 	hf upload alecorlo1234/Clasificacion-Medicinas ./Aplicacion/drug_app.py /drug_app.py --repo-type space --commit-message="Sincronizando drug_app.py"
-	hf upload alecorlo1234/Clasificacion-Medicinas ./Aplicacion/predecir.py /predecir.py --repo-type space --commit-message="Sincronizando predecir.py"
 	hf upload alecorlo1234/Clasificacion-Medicinas ./Modelo /Modelo --repo-type space --commit-message="Sincronizando Modelo"
 	hf upload alecorlo1234/Clasificacion-Medicinas ./Resultados /Metricas --repo-type=space --commit-message="Sincronizando Metricas"
 
