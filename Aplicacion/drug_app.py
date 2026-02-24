@@ -1,5 +1,5 @@
 import gradio as gr
-from predecir import load_model, predict
+from Aplicacion.predecir import load_model, predict
 
 pipeline = load_model()
 
@@ -68,5 +68,5 @@ demo.launch(theme=gr.themes.Soft())
 
 """
 Abrir la terminal y ejecutar el siguiente comando para iniciar la aplicación:
-python ./Aplicacion/drug_app.py
+python -m Aplicacion.drug_app
 """
