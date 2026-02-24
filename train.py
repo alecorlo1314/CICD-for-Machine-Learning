@@ -7,8 +7,11 @@ from sklearn.metrics import accuracy_score, f1_score
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OrdinalEncoder, StandardScaler
 
+from src.data import load_data
+medicamentos_df = load_data("Datos/drug200.csv")
+
 ## Loading the Data
-medicamentos_df = pd.read_csv("Datos/drug200.csv")
+#medicamentos_df = pd.read_csv("Datos/drug200.csv")
 medicamentos_df = medicamentos_df.sample(frac=1)
 
 ## Train Test Split
