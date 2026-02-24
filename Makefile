@@ -62,7 +62,7 @@ update-branch:
 	git config --global user.name $(USER_NAME)
 	git config --global user.email $(USER_EMAIL)
 	git commit -am "Actualizacion con nuevos resultados"
-	git push --force origin HEAD:update
+	git push origin HEAD:update
 
 # ------------------------------------------------------------
 # HF-LOGIN: Autentica en Hugging Face Hub
