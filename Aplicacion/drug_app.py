@@ -1,10 +1,7 @@
 import gradio as gr
-from src.predecir import load_model, predict
-import os
+from predecir import load_model, predict
 
-DIRECTORIO_APLICACION = os.path.dirname(os.path.dirname(__file__))
-RUTA_MODELO = os.path.join(DIRECTORIO_APLICACION, "Modelo", "pipeline.skops")
-pipeline = load_model(RUTA_MODELO)
+pipeline = load_model()
 
 
 def prediccion(age, sex, blood_pressure, cholesterol, na_to_k_ratio):
@@ -57,7 +54,7 @@ articulo = (
 )
 
 
-gr.Interface(
+demo = gr.Interface(
     fn=prediccion,
     inputs=entradas,
     outputs=salida,
@@ -65,8 +62,9 @@ gr.Interface(
     title=titulo,
     description=descripcion,
     article=articulo,
-    theme=gr.themes.Soft(),
-).launch()
+)
+
+demo.launch(theme=gr.themes.Soft())
 
 """
 Abrir la terminal y ejecutar el siguiente comando para iniciar la aplicación:

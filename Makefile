@@ -1,39 +1,11 @@
-# ============================================================
-# MAKEFILE - Pipeline CI/CD para Proyecto de Machine Learning
-# ============================================================
-# Uso: make <objetivo>
-# Ejemplo: make install | make train | make deploy
-# ============================================================
 
-
-# ------------------------------------------------------------
-# INSTALL: Prepara el entorno de trabajo
-# ------------------------------------------------------------
-# 1. Actualiza pip a la ultima version disponible.
-# 2. Instala todas las dependencias del proyecto listadas
-#    en requerimientos.txt.
-# El operador &&\ encadena comandos: el segundo solo se ejecuta
-# si el primero finalizo exitosamente (codigo de salida 0).
 install:
 	pip install --upgrade pip &&\
 	pip install -r requirements.txt
 
-# ------------------------------------------------------------
-# FORMAT: Formatea el codigo fuente automaticamente
-# ------------------------------------------------------------
-# Usa Black, el formateador estandar de Python, para aplicar
-# un estilo consistente a todos los archivos .py del proyecto.
-# Beneficio: elimina discusiones de estilo y mantiene el codigo
-# limpio sin esfuerzo manual.
 format-check:
 	black --check .
 
-# ------------------------------------------------------------
-# TRAIN: Entrena el modelo de Machine Learning
-# ------------------------------------------------------------
-# Ejecuta train.py, que contiene toda la logica de
-# entrenamiento. Al finalizar, genera los archivos de
-# resultados que seran usados en la etapa de evaluacion.
 train:
 	python -m train
 
@@ -55,9 +27,6 @@ update-branch:
 	git commit -am "Update with new results"
 	git push --force origin HEAD:update
 
-# ------------------------------------------------------------
-# HF-LOGIN: Autentica en Hugging Face Hub
-# ------------------------------------------------------------
 hf-login:
 	git fetch origin
 	git switch -c update --track origin/update || git switch update
@@ -65,20 +34,11 @@ hf-login:
 	git config --global credential.helper store
 	hf auth login --token $(HF) --add-to-git-credential
 	hf auth whoami
-# ------------------------------------------------------------
-# PUSH-HUB: Sube archivos al Space de Hugging Face
-# ------------------------------------------------------------
-push-hub:
-	hf upload alecorlo1234/Clasificacion-Medicinas ./Aplicacion --repo-type space --commit-message "Sync Archivos de la App"
-	hf upload alecorlo1234/Clasificacion-Medicinas ./Modelo /Modelo --repo-type=space --commit-message="Sync Modelo"
-	hf upload alecorlo1234/Clasificacion-Medicinas ./Resultados /Metricas --repo-type=space --commit-message="Sync Metricas"
 
-# ------------------------------------------------------------
-# DEPLOY: Despliega la aplicacion completa en Hugging Face
-# ------------------------------------------------------------
-# Objetivo compuesto que ejecuta en orden:
-#   1. hf-login  --> autentica en Hugging Face
-#   2. push-hub  --> sube todos los archivos al Space
-#
-# Uso: make deploy HF="hf_tuTokenAqui"
+push-hub:
+	hf upload alecorlo1234/Clasificacion-Medicinas ./Aplicacion/drug_app.py /drug_app.py --repo-type space --commit-message="Sincronizando drug_app.py"
+	hf upload alecorlo1234/Clasificacion-Medicinas ./Aplicacion/predecir.py /predecir.py --repo-type space --commit-message="Sincronizando predecir.py"
+	hf upload alecorlo1234/Clasificacion-Medicinas ./Modelo /Modelo --repo-type space --commit-message="Sincronizando Modelo"
+	hf upload alecorlo1234/Clasificacion-Medicinas ./Resultados /Metricas --repo-type=space --commit-message="Sincronizando Metricas"
+
 deploy: hf-login push-hub
