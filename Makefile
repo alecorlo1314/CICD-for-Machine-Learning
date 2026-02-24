@@ -40,11 +40,6 @@ train:
 lint:
 	flake8 --ignore E203 --max-line-length 100 src Aplicacion
 
-# ------------------------------------------------------------
-# EVAL: Evalua el modelo y genera un reporte automatico
-# ------------------------------------------------------------
-# Construye un archivo reporte.md con las metricas y graficos
-# del modelo, luego lo publica en GitHub via CML.
 eval:
 	test -f ./Resultados/metricas.txt
 	echo "## Metricas del Modelo" > reporte.md
@@ -53,15 +48,7 @@ eval:
 	echo '![Matriz de Confusion](./Resultados/matriz_confusion.png)' >> reporte.md
 	cml comment create reporte.md
 
-# ------------------------------------------------------------
-# UPDATE-BRANCH: Sube los resultados a la rama 'update'
-# ------------------------------------------------------------
-# Configura la identidad de Git usando variables de entorno
-# (USER_NAME y USER_EMAIL deben pasarse al invocar make).
-# Hace commit de todos los cambios y los sube forzadamente
-# a la rama remota 'update' para que CD pueda tomarlos.
-#
-# Uso: make update-branch USER_NAME="Tu Nombre" USER_EMAIL="tu@email.com"
+
 update-branch:
 	git config --global user.name $(USER_NAME)
 	git config --global user.email $(USER_EMAIL)
