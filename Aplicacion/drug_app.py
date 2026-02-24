@@ -1,7 +1,11 @@
 import gradio as gr
 import skops.io as sio
+from src.predecir import load_model, predict
+import os
 
-pipiline = sio.load("Modelo/pipeline.skops", trusted=['numpy.dtype'])
+DIRECTORIO_APLICACION = os.path.dirname(os.path.dirname(__file__))
+RUTA_MODELO = os.path.join(DIRECTORIO_APLICACION, "Modelo", "pipeline.skops")
+pipeline = load_model(RUTA_MODELO)
 
 def prediccion(age, sex, blood_pressure, cholesterol, na_to_k_ratio):
     """Predice el medicamento basado en las características del paciente
@@ -18,7 +22,7 @@ def prediccion(age, sex, blood_pressure, cholesterol, na_to_k_ratio):
     """
 
     caracteristicas = [age, sex, blood_pressure, cholesterol, na_to_k_ratio]
-    medicamento_predicho = pipiline.predict([caracteristicas])[0]
+    medicamento_predicho = predict(pipeline, caracteristicas)
 
     label = f"El medicamento recomendado para el paciente es: {medicamento_predicho}"
     return label

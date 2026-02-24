@@ -25,8 +25,8 @@ install:
 # un estilo consistente a todos los archivos .py del proyecto.
 # Beneficio: elimina discusiones de estilo y mantiene el codigo
 # limpio sin esfuerzo manual.
-format:
-	black *.py
+format-check:
+	black --check .
 
 # ------------------------------------------------------------
 # TRAIN: Entrena el modelo de Machine Learning
@@ -35,7 +35,14 @@ format:
 # entrenamiento. Al finalizar, genera los archivos de
 # resultados que seran usados en la etapa de evaluacion.
 train:
-	python train.py
+	python -m train
+
+
+lint:
+	flake8 src Aplicacion
+
+test:
+	pytest
 
 # ------------------------------------------------------------
 # EVAL: Evalua el modelo y genera un reporte automatico
@@ -43,6 +50,7 @@ train:
 # Construye un archivo reporte.md con las metricas y graficos
 # del modelo, luego lo publica en GitHub via CML.
 eval:
+	test -f ./Resultados/metricas.txt
 	echo "## Metricas del Modelo" > reporte.md
 	cat ./Resultados/metricas.txt >> reporte.md
 	echo '\n## Matriz de Confusion' >> reporte.md
@@ -61,8 +69,9 @@ eval:
 update-branch:
 	git config --global user.name $(USER_NAME)
 	git config --global user.email $(USER_EMAIL)
-	git commit -am "Actualizacion con nuevos resultados"
-	git push --force origin HEAD:update
+	git add .
+	git diff --cached --quiet || git commit -m "Actualizacion con nuevos resultados"
+	git push origin HEAD:update
 
 # ------------------------------------------------------------
 # HF-LOGIN: Autentica en Hugging Face Hub
