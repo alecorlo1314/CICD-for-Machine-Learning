@@ -7,6 +7,7 @@ DIRECTORIO_APLICACION = os.path.dirname(os.path.dirname(__file__))
 RUTA_MODELO = os.path.join(DIRECTORIO_APLICACION, "Modelo", "pipeline.skops")
 pipeline = load_model(RUTA_MODELO)
 
+
 def prediccion(age, sex, blood_pressure, cholesterol, na_to_k_ratio):
     """Predice el medicamento basado en las características del paciente
 
@@ -26,6 +27,7 @@ def prediccion(age, sex, blood_pressure, cholesterol, na_to_k_ratio):
 
     label = f"El medicamento recomendado para el paciente es: {medicamento_predicho}"
     return label
+
 
 entradas = [
     gr.Slider(15, 74, step=1, label="Edad"),

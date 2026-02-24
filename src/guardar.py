@@ -15,7 +15,9 @@ def save_metrics(accuracy, f1, path="./Resultados/metricas.txt"):
         outfile.write(f"\nAccuracy = {round(accuracy, 2)}, F1 Score = {round(f1, 2)}")
 
 
-def save_confusion_matrix(model, X_test, y_test, path="./Resultados/matriz_confusion.png"):
+def save_confusion_matrix(
+    model, X_test, y_test, path="./Resultados/matriz_confusion.png"
+):
     os.makedirs(os.path.dirname(path), exist_ok=True)
 
     predictions = model.predict(X_test)

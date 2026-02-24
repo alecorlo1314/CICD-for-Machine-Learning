@@ -11,7 +11,11 @@ def build_pipeline():
 
     transform = ColumnTransformer(
         [
-            ("encoder", OrdinalEncoder(handle_unknown="use_encoded_value", unknown_value=-1), cat_col),
+            (
+                "encoder",
+                OrdinalEncoder(handle_unknown="use_encoded_value", unknown_value=-1),
+                cat_col,
+            ),
             ("num_imputer", SimpleImputer(strategy="median"), num_col),
             ("num_scaler", StandardScaler(), num_col),
         ]
